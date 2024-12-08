@@ -9,6 +9,53 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+
+// category model
+model Category{
+  id Int @id @default(autoincrement())
+  name String // name of the category
+  description String? // description of the category
+  images Image[] // images in the category
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// like model
+model Like{
+  id Int @id @default(autoincrement())
+  image Image @relation(fields: [imageId], references: [id])
+  imageId Int // image id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+// image model
+model Image{
+  id Int @id @default(autoincrement())
+  url String // url of the image
+  name String // name of the image
+  description String? // description of the image
+  likes Like[] // likes on the image
+  category Category @relation(fields: [categoryId], references: [id])
+  categoryId Int // category id
+  user User @relation(fields: [userId], references: [id])
+  userId Int // user id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+// user model
+model User{
+  id Int @id @default(autoincrement())
+  name String // name of the user
+  email String @unique // email of the user
+  password String // password of the user
+  role String @default("user") // role of the user
+  images Image[] // images uploaded by the user
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
