@@ -24,23 +24,13 @@ model Category{
   updatedAt DateTime @updatedAt
 }
 
-// like model
-model Like{
-  id Int @id @default(autoincrement())
-  image Image @relation(fields: [imageId], references: [id])
-  imageId Int // image id
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-
 // image model
 model Image{
   id Int @id @default(autoincrement())
   url String // url of the image
   name String // name of the image
   description String? // description of the image
-  likes Like[] // likes on the image
+  like BigInt?  @default(0) // likes on the image
   category Category @relation(fields: [categoryId], references: [id])
   categoryId Int // category id
   user User @relation(fields: [userId], references: [id])
