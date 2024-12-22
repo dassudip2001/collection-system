@@ -34,7 +34,6 @@ export async function POST(req:NextRequest){
                 name:file.name,
                 description:"",
                 categoryId: formData.get("categoryId") as unknown as number,
-                userId: formData.get("userId") as unknown as number,
                 // like:0
             }
         })  

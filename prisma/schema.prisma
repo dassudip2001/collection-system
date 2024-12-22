@@ -18,7 +18,9 @@ datasource db {
 model Category{
   id Int @id @default(autoincrement())
   name String // name of the category
+  slug String @unique // slug of the category
   description String? // description of the category
+  userId String // user id
   images Image[] // images in the category
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -33,19 +35,7 @@ model Image{
   like BigInt?  @default(0) // likes on the image
   category Category @relation(fields: [categoryId], references: [id])
   categoryId Int // category id
-  user User @relation(fields: [userId], references: [id])
-  userId Int // user id
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 // user model
-model User{
-  id Int @id @default(autoincrement())
-  name String // name of the user
-  email String @unique // email of the user
-  password String // password of the user
-  role String @default("user") // role of the user
-  images Image[] // images uploaded by the user
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}

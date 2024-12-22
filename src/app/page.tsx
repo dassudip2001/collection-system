@@ -1,8 +1,5 @@
+import Welcome from "./components/welcome/Welcome";
 
 export default function Home() {
-  return (
-   <div>
-    <h1>Hello World</h1>
-   </div>
-  );
+  return <Welcome />;
 }
