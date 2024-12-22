@@ -12,8 +12,8 @@ export interface CategoryModelT {
   slug?: string;
   description?: string;
   userId: string;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 // validate schema
@@ -37,6 +37,8 @@ export default function CategoryForm() {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [categoryData, setCategoryData] = useState<CategoryModelT | null>(null);
   const [category, setCategory] = useState<CategoryModelT[]>([]);
+  const [loading,isLoading]=useState<boolean>(false);
+
 
   const {
     register,
@@ -165,11 +167,17 @@ export default function CategoryForm() {
                 </thead>
                 <tbody>
                   {category.map((cat) => (
-                    <tr key={cat.id} className="bg-gray-200 border-b">
+                    <tr key={cat.id} className="bg-white border-b">
                       <td className="px-6 py-4 font-medium text-gray-900">
                         {cat.name}
                       </td>
-                      <td className="px-6 py-4">{cat.createdAt}</td>
+                      <td className="px-6 py-4">
+                        {new Intl.DateTimeFormat('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        }).format(new Date(cat.createdAt as Date))}
+                      </td>
                       <td className="px-6 py-4 text-center">
                         <button
                           onClick={() => handleEdit(cat)}

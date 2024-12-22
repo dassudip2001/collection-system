@@ -4,7 +4,7 @@ import React from "react";
 export default function DashboardLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  return <div>
+  return <div >
     {/* <Navbar /> */}
     <Navbar/>
     {children}

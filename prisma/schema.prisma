@@ -13,29 +13,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 // category model
-model Category{
-  id Int @id @default(autoincrement())
-  name String // name of the category
-  slug String @unique // slug of the category
+model Category {
+  id          Int      @id @default(autoincrement())
+  name        String // name of the category
+  slug        String   @unique // slug of the category
   description String? // description of the category
-  userId String // user id
-  images Image[] // images in the category
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  userId      String // user id
+  posts       Post[] // images in the category
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
-// image model
-model Image{
-  id Int @id @default(autoincrement())
-  url String // url of the image
-  name String // name of the image
-  description String? // description of the image
-  like BigInt?  @default(0) // likes on the image
-  category Category @relation(fields: [categoryId], references: [id])
+// post model
+model Post {
+  id               Int       @id @default(autoincrement())
+  title            String // name of the post
+  accession_number String    @unique // accession number of the post
+  content          String // slug of the post
+  description      String? // description of the post
+  url              String? // url of the post
+  public_path      String? // public path of the post
+  is_published     Boolean   @default(false) // is published or not
+  published_at     DateTime? // published at
+  userId           String // user id
+
+  Category   Category @relation(fields: [categoryId], references: [id]) // category of the post
   categoryId Int // category id
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
-// user model
