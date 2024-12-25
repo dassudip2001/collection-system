@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import { Pen, Plus, Trash2 } from "lucide-react";
 // Category model type
 export interface CategoryModelT {
   id?: number | null;
@@ -37,8 +38,7 @@ export default function CategoryForm() {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [categoryData, setCategoryData] = useState<CategoryModelT | null>(null);
   const [category, setCategory] = useState<CategoryModelT[]>([]);
-  const [loading,isLoading]=useState<boolean>(false);
-
+  // const [loading,isLoading]=useState<boolean>(false);
 
   const {
     register,
@@ -136,12 +136,14 @@ export default function CategoryForm() {
             <div className="p-6 text-gray-900">
               <div className="flex justify-between">
                 <h2 className="text-2xl font-semibold">Category</h2>
-                <div>
+                <div className="flex">
                   <button
                     onClick={handleAddNew}
                     className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   >
-                    Add New Category
+                    <div className="flex space-x-4">
+                      <Plus /> Add New
+                    </div>
                   </button>
                 </div>
               </div>
@@ -149,7 +151,7 @@ export default function CategoryForm() {
           </div>
           {/* toaster */}
           <ToastContainer />
-          <div className="relative overflow-x-auto shadow-md mt-3 sm:rounded-lg">
+          <div className="relative overflow-x-auto shadow-md mt-3 sm:rounded-lg bg-slate-100 ">
             <div>
               <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                 <thead className="text-xs text-gray-700 uppercase ">
@@ -172,10 +174,10 @@ export default function CategoryForm() {
                         {cat.name}
                       </td>
                       <td className="px-6 py-4">
-                        {new Intl.DateTimeFormat('en-US', {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
+                        {new Intl.DateTimeFormat("en-US", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
                         }).format(new Date(cat.createdAt as Date))}
                       </td>
                       <td className="px-6 py-4 text-center">
@@ -183,14 +185,14 @@ export default function CategoryForm() {
                           onClick={() => handleEdit(cat)}
                           className="font-medium text-blue-600 dark:text-blue-500 hover:underline mr-4"
                         >
-                          Edit
+                          <Pen />
                         </button>
-                        <a
+                        <button
                           onClick={() => handleDelete(cat.id as number)}
                           className="font-medium text-red-600 dark:text-red-500 hover:underline"
                         >
-                          Delete
-                        </a>
+                          <Trash2 />
+                        </button>
                       </td>
                     </tr>
                   ))}
